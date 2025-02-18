@@ -1,8 +1,15 @@
 # florentiaIllustrata_code
-Project's repository for the ETL process of Florentia Illustrata project. 
+Project's repository for the ETL (Extract, Transform, Load) process of Florentia Illustrata project. 
 
 Florentia Illustrata is a digital platform developed during an internship at I Tatti - The Harvard University Center for Italian Renaissance. This platform utilizes ResearchSpace to provide access to historical cadastral data of 19th-century Florence. The project's primary goal is to make complex cadastral information more accessible and comprehensible for researchers and the general public. The foundation of Florentia Illustrata is the Belli et al. (2022) dataset, which comprises digitized and georeferenced cadastral maps, along with descriptive tables detailing land parcels, ownership, toponymy, and land use.
 
 A significant contribution of this research is the implementation of an ETL (Extract, Transform, Load) process to prepare the cadastral data. This process involved designing a data model using CIDOC CRM, which was then applied to create an RDF Knowledge Graph. The Knowledge Graph serves as the semantic structure of the Florentia Illustrata platform, enabling map visualization and semantic querying capabilities.
 
 The project goes beyond mere spatial representation by linking cadastral data with historical narratives. Through Florentia Illustrata, users can uncover the stories of the people who lived and worked in 19th-century Florence, providing a multi-layered perspective on urban history as both physical space and lived experience. This approach not only facilitates historical research but also illustrates the potential of Semantic Web technologies in preserving and interpreting cultural heritage.
+
+## data 
+Folder with the starting csv data "Tabella 1. Gli appezzamenti.csv", "Tabella 2. I proprietari.csv" and the gis dataset "Parcellizzazione fondiaria.shp".
+Inside the sub-folder "output" some of the output csv files created with the scripts present in the repo.
+
+
+
