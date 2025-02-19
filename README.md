@@ -7,11 +7,9 @@ A significant contribution of this research is the implementation of an ETL (Ext
 
 The project goes beyond mere spatial representation by linking cadastral data with historical narratives. Through Florentia Illustrata, users can uncover the stories of the people who lived and worked in 19th-century Florence, providing a multi-layered perspective on urban history as both physical space and lived experience. This approach not only facilitates historical research but also illustrates the potential of Semantic Web technologies in preserving and interpreting cultural heritage.
 
-## Folders:
+## Input files:
 
-### data
-Folder with the starting csv data "Tabella 1. Gli appezzamenti.csv", "Tabella 2. I proprietari.csv" and the gis dataset "Parcellizzazione fondiaria.shp".
-All these files are part of the Belli et al. (2022) research output. References:
+The input files of these scripts are part of the Belli et al. (2022) research output. References:
 Belli, Gianluca, Fabio Lucchesi, and Paola Raggi. 2022. Firenze nella prima metà dell’Ottocento: La città nei documenti del Catasto Generale Toscano. Firenze: Firenze University Press. https://doi.org/10.36253/979-12-215-0002-8.
 
 Firenze University Press, Redazione. 2023.“Mappe”.figshare.doi:10.6084/m9.figshare.23500524.v1.
@@ -20,7 +18,7 @@ Firenze University Press, Redazione. 2023.“Banche Dati Geografiche”.figshare
 
 Firenze University Press, Redazione. 2023.“Banche Dati Alfanumeriche”.figshare.doi:10.6084/m9.figshare.23500473.v1.
 
-Inside the sub-folder "output" some of the output csv files created with the scripts present in the repo.
+In particular the csv data "Tabella 1. Gli appezzamenti.csv", "Tabella 2. I proprietari.csv" and the gis dataset "Parcellizzazione fondiaria.shp".
 
 ### macro_categories
 
