@@ -21,18 +21,19 @@ Firenze University Press, Redazione. 2023.“Banche Dati Alfanumeriche”.figsha
 In particular the csv data "Tabella 1. Gli appezzamenti.csv", "Tabella 2. I proprietari.csv" and the gis dataset "Parcellizzazione fondiaria.shp".
 
 ### macro_categories
+![snapshot-1738509120526@2x](https://github.com/user-attachments/assets/62546b31-4799-4105-b9d8-b378e81d5559)
 
 Scripts for the 
-![snapshot-1738876367031@2x](https://github.com/user-attachments/assets/9cf5c9a8-e753-4292-a60d-c33fde3e2244)
+![Column from parcellizzazione_fondiaria (4)](https://github.com/user-attachments/assets/97fcaf5a-3ea3-49e5-b114-e2eeae07b4f7)
+
 
 RDF: https://amsacta.unibo.it/id/eprint/8236
-![Column from parcellizzazione_fondiaria (4)](https://github.com/user-attachments/assets/70bbc19b-0ea4-43f3-9d2f-e39ba0574ae0)
+![florentia_schema](https://github.com/user-attachments/assets/f6553354-57f0-47e6-8527-991c0258bd2c)
+
 
 ### RDFfy
+![Data_model_FI drawio (7)](https://github.com/user-attachments/assets/6a7b00b9-8aea-469e-8cbe-c32f71c3031c)
 
-![Data_model_FI drawio (7)](https://github.com/user-attachments/assets/cc8c60e8-bf42-443a-beb1-78fe4033c4ea)
 
-
-![florentia_schema](https://github.com/user-attachments/assets/67aa3a99-a122-4e1f-a62a-e1b7821aceee)
 
 
