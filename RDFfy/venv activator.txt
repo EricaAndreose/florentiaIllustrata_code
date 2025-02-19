@@ -1,0 +1,4 @@
+wsl -d Ubuntu
+cd Desktop/METAPOLIS/RDFfy
+source venv/bin/activate
+python RDFfy6.py
