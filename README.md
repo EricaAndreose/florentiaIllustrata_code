@@ -48,10 +48,10 @@ The results are then injected into the PostgreSQL database via SQL INSERT, addin
 
 This folder contains a Python script for merging and standardizing land parcel data from the original dataset. The process involves:
 
-1. Merging CSV Files: "*Tabella 1. Gli Appezzamenti*" (land parcels) and "*Tabella 2. I Proprietari*" (owners) are combined using the "*ID Appezzamento*" column to create "*appezzamenti_proprietari*", which is stored in the PostgreSQL database at I Tatti.
-2.  Linking Geometry Data: The "*parcellizzazione_fondiaria*" table (which contains WKT geometry) is connected to "*appezzamenti_proprietari*" using parcel identifiers. However, inconsistencies in parcel numbering required data cleaning.
-3. Cleaning and Standardization: A new column ("*belli_id*") was added to "*parcellizzazione_fondiaria*" to store the standardized parcel identifiers, ensuring correct mapping to "*ID Appezzamento*." This allows accurate integration of spatial and descriptive data.
-4. Database Integration: The cleaned and structured tables are now part of the PostgreSQL database and serve as a foundation for the Florentia Illustrata ResearchSpace instance, where users can visualize parcel data and retrieve ownership details.
+**1. Merging CSV Files**: "*Tabella 1. Gli Appezzamenti*" (land parcels) and "*Tabella 2. I Proprietari*" (owners) are combined using the "*ID Appezzamento*" column to create "*appezzamenti_proprietari*", which is stored in the PostgreSQL database at I Tatti.
+**2.  Linking Geometry Data**: The "*parcellizzazione_fondiaria*" table (which contains WKT geometry) is connected to "*appezzamenti_proprietari*" using parcel identifiers. However, inconsistencies in parcel numbering required data cleaning.
+**3. Cleaning and Standardization**: A new column ("*belli_id*") was added to "*parcellizzazione_fondiaria*" to store the standardized parcel identifiers, ensuring correct mapping to "*ID Appezzamento*." This allows accurate integration of spatial and descriptive data.
+**4. Database Integration**: The cleaned and structured tables are now part of the PostgreSQL database and serve as a foundation for the Florentia Illustrata ResearchSpace instance, where users can visualize parcel data and retrieve ownership details.
 
 ![Column from parcellizzazione_fondiaria (4)](https://github.com/user-attachments/assets/97fcaf5a-3ea3-49e5-b114-e2eeae07b4f7)
 
@@ -148,7 +148,7 @@ After the script runs, you will see the following output:
   - An N-Triples (.nt) file (e.g., *output_data.nt*).
   - A Turtle (.ttl) file (e.g., *output_data_converted_final.ttl*).
   - 
-These files will contain the RDF representation of the cadastral data and can be loaded into an RDF store like [Blazegraph]([https://pages.github.com/](https://blazegraph.com/) or [Qlever](https://github.com/ad-freiburg/qlever).
+These files will contain the RDF representation of the cadastral data and can be loaded into an RDF store like [Blazegraph](https://blazegraph.com/) or [Qlever](https://github.com/ad-freiburg/qlever).
 
 #### Notes
 
@@ -170,7 +170,112 @@ A sample RDF triple from the turtle version of the generated graph:
 ```
 
 The output generated Knowledge Graph produced with this script for the Florentia Illustrata project is stored in AMS Acta:
-https://amsacta.unibo.it/id/eprint/8236
+[https://amsacta.unibo.it/id/eprint/8236](https://amsacta.unibo.it/id/eprint/8236)
+
+## SPARQL Queries example
+
+1. Retrieve street addresses, civic number and owner name of the land parcels:
+
+```
+PREFIX crm: <http://www.cidoc-crm.org/cidoc-crm/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?appezzamento ?civic_number ?street_name ?owner_label WHERE {
+  # Retrieve only parcels that have use = "macelleria"
+  ?appezzamento crm:P101_has_as_general_use <https://florentiaillustrata.net/resource/uso/macelleria> .
+
+  # Find the location of these parcels
+  ?appezzamento crm:P53_has_former_or_current_location ?location .
+
+
+  # Retrieve civic number
+  OPTIONAL {
+    ?location crm:P1_is_identified_by ?civic_identifier .
+    ?civic_identifier crm:P2_has_type <https://florentiaillustrata.net/resource/num_civico> .
+    ?civic_identifier rdfs:label ?civic_number .
+  }
+
+  # Retrieve street name (toponomastica)
+  OPTIONAL {
+    ?location crm:P1_is_identified_by ?street_identifier .
+    ?street_identifier crm:P2_has_type <https://florentiaillustrata.net/resource/toponomastica> .
+    ?street_identifier rdfs:label ?street_name .
+  }
+
+  # Retrieve the owner of the "macelleria" parcel
+  OPTIONAL {
+    ?appezzamento crm:P24i_changed_ownership_through ?acquisition_event .
+    ?owner crm:P22i_acquired_title_through ?acquisition_event .
+    ?owner rdfs:label ?owner_label .
+  }
+}
+```
+
+2. Retrieve the Top Ten Major Landowners
+
+```
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX crm: <http://www.cidoc-crm.org/cidoc-crm/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?acquisition ?proprietario (SUM(?mq) AS ?totalSuperficie) WHERE {
+  ?appezzamento crm:P2_has_type crm:E24_Physical_Human_Made_Thing ;
+                crm:P24i_changed_ownership_through ?acquisition ;
+                crm:P43_has_dimension ?dimension .
+
+  ?dimension crm:P2_has_type crm:E54_Dimension ;
+             crm:P91_has_unit <https://florentiaillustrata.net/resource/metri_quadrati> ;
+             rdfs:label ?superficie .
+
+  BIND(xsd:decimal(?superficie) AS ?mq)
+
+  # Ensuring only persons are selected as proprietors
+  ?ente crm:P22i_acquired_title_through ?acquisition ;
+        crm:P2_has_type crm:E21_Person ;
+        rdfs:label ?proprietario .
+}
+GROUP BY ?acquisition ?proprietario
+ORDER BY DESC(?totalSuperficie)
+LIMIT 10
+```
+
+3. Retrive the civic number, the street adress and the owner's name of the land parcels that has typology "butcher shop"
+   
+```
+PREFIX crm: <http://www.cidoc-crm.org/cidoc-crm/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?appezzamento ?civic_number ?street_name ?owner_label WHERE {
+  # Retrieve only parcels that have use = "macelleria"
+  ?appezzamento crm:P101_has_as_general_use <https://florentiaillustrata.net/resource/uso/macelleria> .
+
+  # Find the location of these parcels
+  ?appezzamento crm:P53_has_former_or_current_location ?location .
+
+
+  # Retrieve civic number
+  OPTIONAL {
+    ?location crm:P1_is_identified_by ?civic_identifier .
+    ?civic_identifier crm:P2_has_type <https://florentiaillustrata.net/resource/num_civico> .
+    ?civic_identifier rdfs:label ?civic_number .
+  }
+
+  # Retrieve street name (toponomastica)
+  OPTIONAL {
+    ?location crm:P1_is_identified_by ?street_identifier .
+    ?street_identifier crm:P2_has_type <https://florentiaillustrata.net/resource/toponomastica> .
+    ?street_identifier rdfs:label ?street_name .
+  }
+
+  # Retrieve the owner of the "macelleria" parcel
+  OPTIONAL {
+    ?appezzamento crm:P24i_changed_ownership_through ?acquisition_event .
+    ?owner crm:P22i_acquired_title_through ?acquisition_event .
+    ?owner rdfs:label ?owner_label .
+  }
+}
+```
 
 ## The Florentia Illustrata process
 
