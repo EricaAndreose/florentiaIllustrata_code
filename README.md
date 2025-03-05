@@ -7,6 +7,10 @@ A significant contribution of this research is the implementation of an ETL (Ext
 
 The project goes beyond mere spatial representation by linking cadastral data with historical narratives. Through Florentia Illustrata, users can uncover the stories of the people who lived and worked in 19th-century Florence, providing a multi-layered perspective on urban history as both physical space and lived experience. This approach not only facilitates historical research but also illustrates the potential of Semantic Web technologies in preserving and interpreting cultural heritage.
 
+This project was carried out as part of an internship for thesis preparation within the Master's Degree in *Digital Humanities and Digital Knowledge* of the student Erica Andreose, at the University of Bologna. The thesis focused on *Knowledge Management*, specifically exploring the role of Semantic Web technologies in preserving and interpreting cultural heritage.
+
+The internship and thesis work involved the design and implementation of an ETL pipeline to transform historical cadastral data into a structured RDF Knowledge Graph, enabling the integration of diverse datasets and facilitating deeper insights into historical urban life.
+
 ## Input files:
 
 The input files of these scripts are part of the Belli et al. (2022) research output. References:
