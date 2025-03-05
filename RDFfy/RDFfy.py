@@ -36,7 +36,7 @@ g.bind("crm", CRM)
 g.bind("base", BASE)
 
 
-csv_file_path = "merged_data_modified.csv"
+csv_file_path = "merged_data_modified.csv" #modify with your input data path
 data = pd.read_csv(csv_file_path, delimiter=";")
 
 # Rename columns 
