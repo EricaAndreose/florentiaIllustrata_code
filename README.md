@@ -49,8 +49,11 @@ The results are then injected into the PostgreSQL database via SQL INSERT, addin
 This folder contains a Python script for merging and standardizing land parcel data from the original dataset. The process involves:
 
 **1. Merging CSV Files**: "*Tabella 1. Gli Appezzamenti*" (land parcels) and "*Tabella 2. I Proprietari*" (owners) are combined using the "*ID Appezzamento*" column to create "*appezzamenti_proprietari*", which is stored in the PostgreSQL database at I Tatti.
+
 **2.  Linking Geometry Data**: The "*parcellizzazione_fondiaria*" table (which contains WKT geometry) is connected to "*appezzamenti_proprietari*" using parcel identifiers. However, inconsistencies in parcel numbering required data cleaning.
+
 **3. Cleaning and Standardization**: A new column ("*belli_id*") was added to "*parcellizzazione_fondiaria*" to store the standardized parcel identifiers, ensuring correct mapping to "*ID Appezzamento*." This allows accurate integration of spatial and descriptive data.
+
 **4. Database Integration**: The cleaned and structured tables are now part of the PostgreSQL database and serve as a foundation for the Florentia Illustrata ResearchSpace instance, where users can visualize parcel data and retrieve ownership details.
 
 ![Column from parcellizzazione_fondiaria (4)](https://github.com/user-attachments/assets/97fcaf5a-3ea3-49e5-b114-e2eeae07b4f7)
