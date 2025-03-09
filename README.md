@@ -79,6 +79,9 @@ Records parcel measurements (*E16_Measurement*, *E54_Dimension*) in original (*b
 
 ![Data_model_FI drawio (7)](https://github.com/user-attachments/assets/6a7b00b9-8aea-469e-8cbe-c32f71c3031c)
 
+The data model was developed following the rules of [CIDOC-CRM](https://cidoc-crm.org/), specifically alignign with [version 7.1](https://cidoc-crm.org/Version/version-7.1.1).
+The graphical choices were base on the approach of [CIDOC-CRM Periodic Table](https://remogrillo.github.io/cidoc-crm_periodic_table/?code=E1) made by Remo Grillo.
+
 **3. RDF Serialization**
 
 Uses *rdflib* to generate RDF triples efficiently. 
