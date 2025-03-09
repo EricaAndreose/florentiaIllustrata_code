@@ -50,6 +50,7 @@ place_uri = BASE["place/Florence"]
 measurements_appezzamento_uri = BASE["cadastrial_survey"]
 timespan_uri = BASE["cadastrial_survey/timespan"]
 appez_uri = BASE["appezzamento"]
+belli_uri = BASE["belli_id"]
 
 
 
@@ -139,6 +140,7 @@ for record in data.itertuples(index=False):
 
         triples.append((appezzamento_uri, CRM["P1_is_identified_by"], belli_id))
         triples.append((belli_id, CRM["P2_has_type"], CRM["E42_Identifier"]))
+        triples.append((belli_id, CRM["P2_has_type"], belli_uri))
         triples.append((belli_id, RDFS["label"], Literal(id_appezzamento, datatype=XSD.string)))
 
 
@@ -419,7 +421,7 @@ print("Tempo loop:", time.time() - loop_start_time)
 
 output_directory = os.path.dirname(csv_file_path)
 
-output_file = os.path.join(output_directory, "output_data.nt")
+output_file = os.path.join(output_directory, "output_data.nt") #modify with your output path and choosen name file
 
 start_serialization_time = time.time()
 g.serialize(destination=output_file, format="nt")
@@ -450,7 +452,7 @@ for prefix, uri in prefixes.items():
 
 # Specify the input and output files
 input_nt_file = output_file
-output_ttl_file = os.path.join(output_directory, "output_data_converted_final.ttl")
+output_ttl_file = os.path.join(output_directory, "output_data_converted_final.ttl")  #modify with your output path and choosen name file
 
 # Complete the command with input file
 rapper_command.append(input_nt_file)
